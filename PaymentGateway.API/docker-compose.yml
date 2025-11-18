@@ -1,0 +1,13 @@
+services:
+  payflow:
+    build:
+      context: ..
+      dockerfile: PaymentGateway.API/Dockerfile
+    image: paymentgatewayapi:latest
+    container_name: paymentgatewayapi-payflow
+    ports:
+      - "5000:80"
+    environment:
+      ProviderAvailability__FastPayAvailable: "true"
+      ProviderAvailability__SecurePayAvailable: "true"
+    restart: unless-stopped
