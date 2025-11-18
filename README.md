@@ -2,9 +2,8 @@
 
 - Minimal API .NET com C#
 - Docker para conteinerização
-- Swagger para documentação da API
-- AutoMapper para mapeamento de objetos
-- Logger para rastreamento e auditoria
+- [Bonus] Swagger para documentação da API
+- [Bonus] Logger para rastreamento e auditoria
 
 ---
 
@@ -13,11 +12,11 @@
 - **Hexagonal Architecture (Ports & Adapters)**: separação clara entre domínio, aplicação e infraestrutura.
 - **Microserviços**: este serviço podes ser usado como parte de uma plataforma maior, podendo se comunicar com outros serviços via filas (RabbitMQ, SQS, Kafka, etc...) ou APIs REST.
 - **DDD, SOLID e Design Patterns**: Padrão Strategy e demais boas praticas aplicadas para garantir escalabilidade, manutenção e legibilidade do código.
-- **Tracing**: Implementa Log Tracing para garantir rastreabilidade completa, acelerar o diagnóstico de problemas e aprimorar o monitoramento de desempenho e suporte a incidentes.
+- **[Bonus] Tracing**: Implementa "middleware" de Log Tracing para garantir rastreabilidade completa, acelerar o diagnóstico de problemas e aprimorar o monitoramento de desempenho e suporte a incidentes.
   
 ---
 
-## 🔍 Log Tracing
+## 🔍 [Bonus] Log Tracing
 
 - Implementação de Rastreamento Distribuído
 - Geração de trace ID único por requisição
@@ -55,18 +54,26 @@
 docker-compose up --build
 
 # Para simular indisponibilidade, ajuste as variáveis de ambiente em docker-compose.yml ou exporte antes:
-export PAYMENT_FASTPAY_AVAILABLE=false
+export ProviderAvailability__FastPayAvailable=false
 ```
 
 2. Build e run local (opcional):
 ```bash
-cd payment-gateway
+cd PaymentGateway
 dotnet build
-dotnet run --project src/payment-gateway.Api/payment-gateway.Api.csproj
+dotnet run --project src/PaymentGateway.Api/PaymentGateway.Api.csproj
 
+# Para simular indisponibilidade, ajuste as configurações do provedor em appsettings.json:
 # Exemplo de requisição
 # POST http://localhost:5000/payments 
 # body: {"amount":120.50,"currency":"BRL"}
+```
+
+3. Execução no Visual Studio (opcional)
+```text
+1. Selecione o Perfil: Certifique-se de que o perfil de depuração http (ou o nome do seu projeto, se for o perfil padrão) esteja selecionado no menu suspenso ao lado do botão verde "Executar" (ou F5).
+2. Inicie a Aplicação: Pressione F5 (Iniciar Depuração) ou clique no botão verde.
+3. Acesso Automático: O Visual Studio iniciará a aplicação e tentará abrir automaticamente a página do Swagger em seu navegador padrão.
 ```
 
 ### Resposta Esperada
