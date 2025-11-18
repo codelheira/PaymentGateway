@@ -20,6 +20,8 @@ namespace PaymentGateway.Application.Services
         public async Task<ProcessPaymentResult> ExecuteAsync(ProcessPaymentRequest request, CancellationToken ct = default)
         {
             if (request.Amount <= 0) throw new ArgumentException("Amount must be > 0");
+            if (!IsValidCurrency(request.Currency)) throw new ArgumentException("Invalid currency");
+
             var money = new Money(request.Amount, request.Currency);
 
             var payment = new Payment(money);
@@ -83,6 +85,9 @@ namespace PaymentGateway.Application.Services
                 throw new InvalidOperationException("no provider available");
             }
         }
+        private bool IsValidCurrency(string input)
+        {
+            return Enum.TryParse<CurrencyEnum>(input, out _);
+        }
     }
-
 }
